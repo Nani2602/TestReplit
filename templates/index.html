@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Log Viewer</title>
+</head>
+<body>
+    <pre id="log-content"></pre>
+
+    <script>
+        const logContent = document.getElementById('log-content');
+
+        function updateLog(data) {
+            logContent.innerHTML += data;
+        }
+
+        function connectToLog() {
+            const source = new EventSource('/log');
+            source.onmessage = function(event) {
+                updateLog(event.data);
+            };
+        }
+
+        window.onload = function() {
+            connectToLog();
+        };
+    </script>
+</body>
+</html>
